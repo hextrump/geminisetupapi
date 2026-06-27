@@ -4,32 +4,32 @@
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
 [![Gemini CLI](https://img.shields.io/badge/@google/gemini--cli-0.49.0-orange.svg)](https://www.npmjs.com/package/@google/gemini-cli)
 
-一个高度完善、全自动化且支持跨平台的 **Google AI Studio 和 `@google/gemini-cli` 一键式配置与环境诊断 Agent 技能（Agent Skill）**。
+A highly optimized, fully automated, and cross-platform **agent skill** for Google AI Studio and `@google/gemini-cli` one-click environment setup and diagnostics.
 
-本仓库实现了环境的全自动分析、本地与全局变量的多层级持久化注入、API 连通性校验，以及针对常见收费/限流报错（如 Prepay 429、GCP Billing 等）的保姆级排查手册，旨在帮助开发者以零配置成本瞬间接入 Gemini API 宇宙。
+This repository provides full-cycle automated environment analysis, multi-level local and global variable injection, API connectivity validation, and comprehensive troubleshooting guides for common billing/quota errors (such as Prepay 429 and GCP Billing). It aims to help developers connect to the Gemini API ecosystem with zero manual configuration cost.
 
 ---
 
-## 🌟 核心特性 (Key Features)
+## 🌟 Key Features
 
-本技能在运行过程中将自动编排并执行以下 6 个生命周期阶段：
+This skill automatically orchestrates and executes the following 6 life-cycle phases:
 
-| 阶段 | 任务名称 | 自动化行为 |
+| Phase | Phase Name | Automated Behaviors |
 | :--- | :--- | :--- |
-| **Phase 1** | **全自动环境诊断** | 运行诊断脚本检测 Node.js, NPM, Gemini CLI, gcloud 的安装情况，并校验 API Key 的物理连通性。 |
-| **Phase 2** | **自动补全依赖** | 自动检测并全局安装缺失的 `@google/gemini-cli`，提示升级 Node.js 环境。 |
-| **Phase 3** | **Copilot 网页导流** | 自动调起本地 Chrome 浏览器直达 AI Studio 密钥页，避开高强度机器人防护验证。 |
-| **Phase 4** | **多层级持久化配置** | 自动更新项目 `.env`、用户家目录 `.env`、永久写入系统注册表环境变量（Windows/macOS/Linux），并修改 `settings.json`。 |
-| **Phase 5** | **终极连通性测试** | 无需重启终端，即时注入当前会话变量，调用 `@google/gemini-cli` 发起 Live Chat 联调验证。 |
-| **Phase 6** | **自愈式故障排查** | 主动匹配 429 Quota Exceeded（Prepay）、Billing 未激活、404 模型不存在等边界异常，自动给出解决指引。 |
+| **Phase 1** | **Automated Diagnostics** | Runs a zero-dependency diagnostics script to verify Node.js, NPM, Gemini CLI, and gcloud installations, and tests direct API connectivity. |
+| **Phase 2** | **Prerequisites Setup** | Auto-detects and installs the `@google/gemini-cli` globally, and prompts to upgrade Node.js if needed. |
+| **Phase 3** | **Copilot Browser Flow** | Launches your local Chrome browser with CDP debugging enabled, navigating straight to the AI Studio API Keys page to bypass bot-protection. |
+| **Phase 4** | **Multi-Level Persistence** | Automatically writes the API key to the project `.env`, user home directory `.env`, persistent OS registry environment variables (Windows/macOS/Linux), and updates `settings.json`. |
+| **Phase 5** | **Live Connection Test** | Injects the active session variables immediately so you can test and chat with `@google/gemini-cli` in real-time without restarting your terminal. |
+| **Phase 6** | **Self-Healing Troubleshooting** | Intercepts common errors like 429 Quota Exceeded (Prepay), GCP Billing not linked, and 404 Model Not Found, offering immediate step-by-step solutions. |
 
 ---
 
-## 📦 如何在您的 Agent 中安装此技能？
+## 📦 Installation
 
-本技能完全兼容 `npx skills` 开放 Agent 技能标准（Open Agent Skills Ecosystem）。
+This skill is fully compliant with the `npx skills` open agent skills ecosystem standard.
 
-要将此配置技能全局安装到您的 AI 编码助手（如 Cursor、Claude Code、Antigravity）中，只需在终端中运行：
+To install this setup skill globally into your AI coding assistant (such as Cursor, Claude Code, or Antigravity), simply run the following command in your terminal:
 
 ```bash
 npx skills add hextrump/geminisetupapi@gemini_setup -g -y
@@ -37,48 +37,49 @@ npx skills add hextrump/geminisetupapi@gemini_setup -g -y
 
 ---
 
-## 🛠️ 本地运行与开发指南
+## 🛠️ Local Running & Development Guide
 
-### 1. 运行本地环境诊断
-本仓库附带一个轻量级、**零依赖**的环境诊断脚本。它不仅能检验系统环境，还能自动解析您本地的 `.env` 文件和家目录环境变量：
+### 1. Run Local Environment Diagnostics
+This repository includes a lightweight, **zero-dependency** environment diagnostics script. It automatically detects your system setup and parses your local `.env` files and user-level home directories:
 
 ```bash
 node .agents/skills/gemini_setup/scripts/check_env.js
 ```
 
-### 2. 目录结构
+### 2. Directory Structure
 ```text
 googlesetapi/
 ├── .agents/
 │   └── skills/
 │       └── gemini_setup/
-│           ├── SKILL.md                 # 核心技能逻辑及执行指令
+│           ├── SKILL.md                 # Core skill logic and execution steps
 │           ├── scripts/
-│           │   └── check_env.js         # 零依赖高表现力诊断脚本
+│           │   └── check_env.js         # Zero-dependency diagnostics script
 │           └── references/
-│               └── troubleshooting.md   # 精准故障排查与账单充值指南
-├── .gitignore                           # 安全策略，防止泄露私钥
-└── README.md                            # 本文档
+│               └── troubleshooting.md   # Comprehensive billing and quota troubleshooting guide
+├── .gitignore                           # Security policy preventing private key leaks
+└── README.md                            # This documentation (English)
 ```
 
 ---
 
-## 🚨 常见问题与排查 (Troubleshooting)
+## 🚨 Troubleshooting & FAQ
 
-### 1. 报错：`Your prepayment credits are depleted` (RESOURCE_EXHAUSTED / 429)
-* **原因**：这是 Google AI Studio 最新的账户预付费策略。如果项目被切入付费版且 Prepay 账户余额为 0，会触发该强限流拦截。
-* **解决办法**：
-  1. 登录 [Google AI Studio Projects](https://aistudio.google.com/projects)。
-  2. 在 Billing 页面选择充值（例如充值 $5 激活 API）；或创建一个全新的项目，并为其生成 **Free Tier（免费层）** 的 API Key。
+### 1. Error: `Your prepayment credits are depleted` (RESOURCE_EXHAUSTED / 429)
+* **Cause**: This is Google AI Studio's newest billing policy. If your developer project is associated with a paid account but your prepay credit balance drops to zero, the API blocks calls with a 429 rate limit error.
+* **Solution**:
+  1. Open [Google AI Studio Projects](https://aistudio.google.com/projects).
+  2. Go to the Billing / Settings tab of your active project.
+  3. Either add a small prepay balance (e.g., $5) via credit card to reactivate the Pay-as-you-go quota, or create/switch to a **Free Tier** project and generate a new API key.
 
-### 2. Windows 环境变量未即时生效？
-* **解决办法**：Windows 用户环境变量写入注册表后，当前活跃的控制台进程可能存在缓存。本 Skill 已在 Phase 4 实现了会话级注入，如果您在外部终端遇到此问题，只需运行一次：
+### 2. Windows Environment Variables Do Not Take Effect Instantly?
+* **Solution**: When user-level environment variables are written to the Windows Registry, active console sessions may not see the changes immediately. While our Skill handles session-level injection during Phase 4, if you encounter this in an external terminal, simply run the following command to refresh it:
   ```powershell
   $env:GEMINI_API_KEY = [System.Environment]::GetEnvironmentVariable('GEMINI_API_KEY', 'User')
   ```
 
 ---
 
-## 📄 开源许可证
+## 📄 License
 
-本项目基于 **MIT License** 开源。欢迎共享与贡献！
+This project is open-source and licensed under the **MIT License**. Contributions are always welcome!
